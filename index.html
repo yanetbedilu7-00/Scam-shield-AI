@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Scam shield AI</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScamShield AI | Protection Engine</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; }
+
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+
+        .scam-highlight { color: #f43f5e; font-weight: 800; text-decoration: underline; }
+
+    </style>
+
+</head>
+
+<body class="p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+
+        <header class="text-center mb-10">
+
+            <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-indigo-400">🛡️ ScamShield AI</h1>
+
+            <p class="text-slate-400">Gemini 3 Powered Fraud Detection for the Modern Web</p>
+
+        </header>
+
+        <div class="glass p-6 rounded-2xl shadow-2xl mb-8">
+
+            <textarea id="scamInput" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-4 text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" rows="5" placeholder="Paste the suspicious text, email, or URL here..."></textarea>
+
+            <button id="analyzeBtn" onclick="runAnalysis()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition-all flex justify-center items-center gap-2">
+
+                <span>Check for Scam</span>
+
+            </button>
+
+        </div>
+
+        <div id="resultsTimeline" class="space-y-6">
+
+            </div>
+
+    </div>
+
+    <script>
+
+        async function runAnalysis() {
+
+            const text = document.getElementById('scamInput').value;
+
+            const btn = document.getElementById('analyzeBtn');
+
+            if (!text.trim()) return;
+
+            btn.disabled = true;
+
+            btn.innerHTML = `<span class="animate-spin text-xl">🌀</span> Scanning...`;
+
+            try {
+
+                // In a real AI Studio build, you would call your backend/API here
+
+                const data = await callGeminiAPI(text);
+
+                displayResult(data);
+
+                document.getElementById('scamInput').value = '';
+
+            } catch (e) {
+
+                alert("Connection failed. Check your API configuration.");
+
+            } finally {
+
+                btn.disabled = false;
+
+                btn.innerHTML = `Check for Scam`;
+
+            }
+
+        }
+
+        function displayResult(res) {
+
+            const timeline = document.getElementById('resultsTimeline');
+
+            const riskColor = res.riskLevel === 'High' ? 'text-rose-500' : (res.riskLevel === 'Medium' ? 'text-amber-500' : 'text-emerald-500');
+
+            
+
+            const card = document.createElement('div');
+
+            card.className = "glass p-6 rounded-2xl animate-in fade-in slide-in-from-bottom-4 duration-500";
+
+            card.innerHTML = `
+
+                <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
+
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Analysis Result</span>
+
+                    <span class="font-black ${riskColor}">${res.riskLevel.toUpperCase()} RISK</span>
+
+                </div>
+
+                <h3 class="text-xl font-bold mb-2">${res.summary}</h3>
+
+                <p class="text-slate-300 mb-4">${res.explanation}</p>
+
+                
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+
+                        <span class="block text-rose-400 text-xs font-bold mb-1">RED FLAGS</span>
+
+                        <ul class="text-sm list-disc pl-4 text-slate-300">
+
+                            ${res.redFlags.map(f => `<li>${f}</li>`).join('')}
+
+                        </ul>
+
+                    </div>
+
+                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+
+                        <span class="block text-indigo-400 text-xs font-bold mb-1">TECHNIQUE</span>
+
+                        <p class="text-sm text-slate-300">${res.manipulationTechnique}</p>
+
+                    </div>
+
+                </div>
+
+                <div class="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-xl mb-4">
+
+                    <span class="block text-emerald-400 text-xs font-bold mb-1">🛡️ SAFER VERSION</span>
+
+                    <p class="text-sm italic text-slate-200">"${res.saferVersion}"</p>
+
+                </div>
+
+                <div class="flex flex-col gap-2 text-sm text-slate-400">
+
+                    <p><strong>Next Steps:</strong> ${res.safeNextSteps}</p>
+
+                    <p class="text-indigo-300"><strong>Ask Gemini:</strong> ${res.followUpQuestion}</p>
+
+                </div>
+
+            `;
+
+            timeline.prepend(card);
+
+        }
+
+        // Mocking the API call for demonstration. 
+
+        // In AI Studio, replace this with the @google/genai SDK call.
+
+        async function callGeminiAPI(input) {
+
+            return new Promise(r => setTimeout(() => r({
+
+                riskLevel: "High",
+
+                summary: "Fake Shipping Notification",
+
+                explanation: "This message claims a package is held due to an address error, a common tactic to harvest credit card data.",
+
+                redFlags: ["Non-official URL", "Urgent tone", "Generic greeting"],
+
+                manipulationTechnique: "Smishing (SMS Phishing)",
+
+                safeNextSteps: "Block the number and go directly to the official courier's website.",
+
+                saferVersion: "We were unable to deliver your package. Please visit ups.com/tracking for updates.",
+
+                followUpQuestion: "Would you like me to check if that link is on a known blacklist?"
+
+            }), 1500));
+
+        }
+
+    </script>
+  <p style="font-size:14px;color:gray;">
+
+Powered by Gemini 3 API
+
+</p>
+
+</body>
+
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
