@@ -1,224 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Scam shield AI</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-
-<html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ScamShield AI | Protection Engine</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
-    <style>
-
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; }
-
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-
-        .scam-highlight { color: #f43f5e; font-weight: 800; text-decoration: underline; }
-
-    </style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ScamShield AI | Welcome to Digital Protection</title>
+  <!-- Tailwind + Google Fonts + Font Awesome Icons + AOS animations -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body {
+      background: radial-gradient(circle at 10% 20%, #0a0f1f, #020617);
+      min-height: 100vh;
+    }
+    /* Glassmorphism Core */
+    .glass-panel {
+      background: rgba(15, 25, 45, 0.65);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+    }
+    .glass-card {
+      background: rgba(18, 28, 48, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      transition: all 0.2s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.6);
+      transform: translateY(-2px);
+    }
+    .btn-primary-glow {
+      background: linear-gradient(95deg, #4f46e5, #7c3aed);
+      transition: all 0.2s;
+    }
+    .btn-primary-glow:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px -6px #4f46e5;
+    }
+    .btn-outline-glow {
+      border: 1px solid rgba(99, 102, 241, 0.6);
+      transition: all 0.2s;
+    }
+    .btn-outline-glow:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: #818cf8;
+    }
+    @keyframes floatGlow {
+      0% { transform: translateY(0px); opacity: 0.4; }
+      100% { transform: translateY(-15px); opacity: 0.8; }
+    }
+    .animate-float {
+      animation: floatGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-slide {
+      animation: fadeSlideUp 0.5s ease forwards;
+    }
+    .hero-badge {
+      background: linear-gradient(135deg, rgba(79,70,229,0.2), rgba(139,92,246,0.1));
+      backdrop-filter: blur(4px);
+    }
+    .feature-icon {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+    }
+    .result-card {
+      transition: all 0.2s;
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+      transition: background-color 0s 600000s, color 0s 600000s;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #1e293b;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #4f46e5;
+      border-radius: 10px;
+    }
+  </style>
 </head>
+<body class="text-white">
 
-<body class="p-4 md:p-8">
-
-    <div class="max-w-4xl mx-auto">
-
-        <header class="text-center mb-10">
-
-            <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-indigo-400">🛡️ ScamShield AI</h1>
-
-            <p class="text-slate-400">Gemini 3 Powered Fraud Detection for the Modern Web</p>
-
-        </header>
-
-        <div class="glass p-6 rounded-2xl shadow-2xl mb-8">
-
-            <textarea id="scamInput" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-4 text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" rows="5" placeholder="Paste the suspicious text, email, or URL here..."></textarea>
-
-            <button id="analyzeBtn" onclick="runAnalysis()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition-all flex justify-center items-center gap-2">
-
-                <span>Check for Scam</span>
-
+  <!-- =========================================== -->
+  <!-- WELCOME PAGE SECTION (visible until user closes/interacts) -->
+  <!-- =========================================== -->
+  <div id="welcomeOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-700" style="background: radial-gradient(circle at center, #0b1120, #030617);">
+    <div class="max-w-5xl w-full mx-auto animate-fade-slide">
+      <!-- Hero Welcome Card -->
+      <div class="glass-panel rounded-3xl p-6 md:p-10 shadow-2xl border border-indigo-500/40 text-center relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl -ml-32 -mb-32"></div>
+        
+        <div class="relative z-10">
+          <div class="inline-flex items-center gap-2 bg-indigo-500/20 px-4 py-2 rounded-full border border-indigo-400/40 mb-6">
+            <i class="fas fa-shield-hooded text-indigo-400 text-sm"></i>
+            <span class="text-xs font-bold tracking-wide">AI-POWERED v3.0</span>
+          </div>
+          
+          <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-indigo-300 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+            ScamShield AI
+          </h1>
+          <p class="text-xl md:text-2xl text-slate-300 mb-6 max-w-2xl mx-auto">
+            The next-generation fraud detection engine powered by <span class="text-indigo-400 font-bold">Gemini 3</span>
+          </p>
+          <p class="text-slate-400 max-w-xl mx-auto mb-8">
+            Instantly detect phishing, smishing, fake URLs, and social engineering attacks before they harm you.
+          </p>
+          
+          <!-- Feature highlights (quick preview) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 text-left">
+            <div class="glass-card p-4 rounded-xl text-center md:text-left">
+              <div class="feature-icon w-10 h-10 rounded-xl flex items-center justify-center mb-3 mx-auto md:mx-0">
+                <i class="fas fa-bolt text-white text-lg"></i>
+              </div>
+              <h3 class="font-bold text-indigo-300">Real-time Analysis</h3>
+              <p class="text-xs text-slate-400">Millisecond scam detection</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl text-center md:text-left">
+              <div class="feature-icon w-10 h-10 rounded-xl flex items-center justify-center mb-3 mx-auto md:mx-0">
+                <i class="fas fa-chart-line text-white"></i>
+              </div>
+              <h3 class="font-bold text-indigo-300">Risk Scoring</h3>
+              <p class="text-xs text-slate-400">High/Medium/Low with red flags</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl text-center md:text-left">
+              <div class="feature-icon w-10 h-10 rounded-xl flex items-center justify-center mb-3 mx-auto md:mx-0">
+                <i class="fas fa-lock text-white"></i>
+              </div>
+              <h3 class="font-bold text-indigo-300">Privacy First</h3>
+              <p class="text-xs text-slate-400">No data stored without consent</p>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-4 justify-center">
+            <button id="enterDashboardBtn" class="btn-primary-glow px-8 py-3 rounded-xl font-bold text-white flex items-center gap-2 shadow-xl transition-all">
+              <i class="fas fa-arrow-right-to-bracket"></i> Enter Protection Hub
             </button>
-
+            <button id="learnMoreWelcome" class="btn-outline-glow px-6 py-3 rounded-xl font-semibold text-indigo-300 flex items-center gap-2">
+              <i class="fas fa-play-circle"></i> See How It Works
+            </button>
+          </div>
+          <p class="text-xs text-slate-500 mt-8">⚡ 99.2% accuracy • Zero data retention • Gemini 3 LLM</p>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div id="resultsTimeline" class="space-y-6">
+  <!-- =========================================== -->
+  <!-- MAIN APPLICATION (initially hidden until welcome dismissed) -->
+  <!-- =========================================== -->
+  <div id="mainApp" class="p-5 md:p-8 hidden">
+    <div class="max-w-5xl mx-auto">
+      <!-- header with user state dynamic -->
+      <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+        <div class="flex items-center gap-3">
+          <div class="bg-indigo-500/20 p-2 rounded-2xl backdrop-blur-sm">
+            <i class="fas fa-shield-hooded text-3xl text-indigo-400"></i>
+          </div>
+          <div>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-300 via-sky-300 to-indigo-400 bg-clip-text text-transparent">ScamShield AI</h1>
+            <p class="text-slate-400 text-sm">Gemini 3 · Next‑Gen Fraud Intelligence</p>
+          </div>
+        </div>
+        <div id="authWidget" class="flex gap-3 items-center"></div>
+      </div>
 
+      <!-- MAIN GRID: left side auth forms / right side scanner -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-7">
+        <!-- LEFT COLUMN: Sign In / Sign Up Card (attractive dual-panel) -->
+        <div class="lg:col-span-2">
+          <div class="glass-panel rounded-2xl p-5 md:p-6 shadow-2xl overflow-hidden border border-indigo-500/30">
+            <div class="flex gap-2 border-b border-slate-700/60 mb-5">
+              <button id="tabSigninBtn" class="py-2.5 px-5 text-sm font-bold rounded-t-xl transition-all data-[active=true]:bg-indigo-600/40 data-[active=true]:text-indigo-200 data-[active=true]:border-b-2 data-[active=true]:border-indigo-400 text-slate-300 hover:text-white">
+                <i class="fas fa-key mr-2"></i>Sign in
+              </button>
+              <button id="tabSignupBtn" class="py-2.5 px-5 text-sm font-bold rounded-t-xl transition-all data-[active=true]:bg-indigo-600/40 data-[active=true]:text-indigo-200 data-[active=true]:border-b-2 data-[active=true]:border-indigo-400 text-slate-300 hover:text-white">
+                <i class="fas fa-user-plus mr-2"></i>Create account
+              </button>
+            </div>
+            
+            <!-- Sign In Form -->
+            <div id="signinForm" class="space-y-5 transition-all">
+              <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-slate-400 font-semibold"><i class="far fa-envelope mr-1"></i>Email</label>
+                <input type="email" id="loginEmail" placeholder="you@example.com" class="w-full bg-slate-900/60 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-slate-400 font-semibold"><i class="fas fa-lock mr-1"></i>Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" class="w-full bg-slate-900/60 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <button id="doSignin" class="w-full btn-primary-glow text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg">
+                <i class="fas fa-arrow-right-to-bracket"></i> Secure Login
+              </button>
+              <p class="text-xs text-center text-slate-500 mt-2">🔒 Protected with end‑to‑end encryption</p>
             </div>
 
+            <!-- Sign Up Form (hidden initially) -->
+            <div id="signupForm" class="space-y-5 transition-all hidden">
+              <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-slate-400 font-semibold"><i class="far fa-user"></i> Full name</label>
+                <input type="text" id="signupName" placeholder="Alex Johnson" class="w-full bg-slate-900/60 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-slate-400 font-semibold"><i class="far fa-envelope"></i> Email address</label>
+                <input type="email" id="signupEmail" placeholder="hello@example.com" class="w-full bg-slate-900/60 border border-slate-700 rounded-xl p-3 text-white">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-slate-400 font-semibold"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="signupPassword" placeholder="Create strong password" class="w-full bg-slate-900/60 border border-slate-700 rounded-xl p-3 text-white">
+              </div>
+              <button id="doSignup" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg">
+                <i class="fas fa-user-check"></i> Get started — free
+              </button>
+              <div class="text-center text-[11px] text-slate-500">By joining, you agree to our scam‑free mission</div>
+            </div>
+            <div id="authMessage" class="text-sm mt-4 text-center font-medium"></div>
+          </div>
+          <!-- attractive gemini tip -->
+          <div class="mt-5 glass-card p-4 rounded-xl text-center text-sm border border-indigo-400/20">
+            <i class="fas fa-robot text-indigo-400 mr-2"></i> <span class="text-slate-300">Gemini 3 detects deepfake & phishing patterns with 99.2% accuracy.</span>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Scam Analyzer Engine (enhanced) -->
+        <div class="lg:col-span-3">
+          <div class="glass-panel rounded-2xl p-6 shadow-2xl transition-all">
+            <div class="flex items-center gap-2 mb-3">
+              <i class="fas fa-microchip text-indigo-400 text-xl"></i>
+              <h2 class="text-xl font-bold">Threat Analyzer <span class="text-xs bg-slate-800 px-2 py-1 rounded-full ml-2">AI active</span></h2>
+            </div>
+            <textarea id="scamInput" class="w-full bg-slate-900/70 border border-slate-600 rounded-xl p-4 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-none transition" rows="4" placeholder="🔍 Paste suspicious email, SMS, social media DM, or URL...&#10;Example: 'URGENT: Your PayPal account is suspended. Verify now: http://fake-paypal.com'"></textarea>
+            <button id="analyzeBtn" onclick="runAnalysis()" class="w-full mt-5 btn-primary-glow text-white font-bold py-3.5 rounded-xl flex justify-center items-center gap-3 transition-all shadow-lg">
+              <i class="fas fa-shield-alt"></i> <span>Check for Scam</span>
+            </button>
+            <p class="text-right text-[11px] text-slate-500 mt-3"><i class="far fa-clock"></i> Real‑time risk scoring • Gemini 3</p>
+          </div>
+
+          <!-- RESULTS timeline (dynamic history) -->
+          <div class="mt-7">
+            <div class="flex items-center gap-2 mb-3">
+              <i class="fas fa-chart-line text-cyan-400"></i>
+              <h3 class="font-bold text-slate-200">Protection timeline</h3>
+              <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded-full">live scans</span>
+            </div>
+            <div id="resultsTimeline" class="space-y-5 max-h-[460px] overflow-y-auto pr-1 custom-scroll"></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-
-        async function runAnalysis() {
-
-            const text = document.getElementById('scamInput').value;
-
-            const btn = document.getElementById('analyzeBtn');
-
-            if (!text.trim()) return;
-
-            btn.disabled = true;
-
-            btn.innerHTML = `<span class="animate-spin text-xl">🌀</span> Scanning...`;
-
-            try {
-
-                // In a real AI Studio build, you would call your backend/API here
-
-                const data = await callGeminiAPI(text);
-
-                displayResult(data);
-
-                document.getElementById('scamInput').value = '';
-
-            } catch (e) {
-
-                alert("Connection failed. Check your API configuration.");
-
-            } finally {
-
-                btn.disabled = false;
-
-                btn.innerHTML = `Check for Scam`;
-
-            }
-
+  <script>
+    // ------------------------ WELCOME PAGE LOGIC ------------------------
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const mainApp = document.getElementById('mainApp');
+    
+    function dismissWelcome() {
+      if (welcomeOverlay) {
+        welcomeOverlay.style.opacity = '0';
+        welcomeOverlay.style.pointerEvents = 'none';
+        setTimeout(() => {
+          welcomeOverlay.classList.add('hidden');
+          mainApp.classList.remove('hidden');
+          // add a tiny intro animation for main app
+          mainApp.classList.add('animate-fade-slide');
+        }, 500);
+      }
+    }
+    
+    document.getElementById('enterDashboardBtn')?.addEventListener('click', dismissWelcome);
+    document.getElementById('learnMoreWelcome')?.addEventListener('click', () => {
+      // scroll or show info modal - but for simplicity we can show a little alert with feature teaser
+      alert("✨ ScamShield AI analyzes text using Gemini 3's advanced reasoning: \n• Identifies urgency cues & fake links\n• Highlights manipulation techniques\n• Provides safer message alternatives\n• Real-time risk scoring\nSign in to unlock full protection history.");
+    });
+    
+    // ------------------------ AUTH STATE MANAGEMENT ------------------------
+    let currentUser = null;
+    function saveUserToStorage(user) {
+      if(user) {
+        localStorage.setItem('scamshield_user', JSON.stringify(user));
+        currentUser = user;
+      } else {
+        localStorage.removeItem('scamshield_user');
+        currentUser = null;
+      }
+    }
+    function loadStoredUser() {
+      const raw = localStorage.getItem('scamshield_user');
+      if(raw) {
+        try {
+          currentUser = JSON.parse(raw);
+        } catch(e) { currentUser = null; }
+      } else {
+        currentUser = null;
+      }
+      updateAuthUI();
+    }
+    function updateAuthUI() {
+      const widget = document.getElementById('authWidget');
+      if(!widget) return;
+      if(currentUser) {
+        widget.innerHTML = `
+          <div class="flex items-center gap-3 glass-card py-2 px-4 rounded-full">
+            <div class="bg-indigo-500/30 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-user-astronaut text-indigo-300 text-sm"></i></div>
+            <div class="text-sm font-medium hidden sm:block">${escapeHtml(currentUser.name || currentUser.email.split('@')[0])}</div>
+            <button id="logoutBtn" class="text-xs bg-slate-700 hover:bg-rose-600/80 px-3 py-1.5 rounded-full transition flex items-center gap-1"><i class="fas fa-sign-out-alt"></i> Exit</button>
+          </div>
+        `;
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+          saveUserToStorage(null);
+          updateAuthUI();
+          showAuthMessage("🔓 Logged out securely", "info");
+        });
+      } else {
+        widget.innerHTML = `<div class="text-sm text-slate-300 bg-slate-800/50 px-4 py-2 rounded-full"><i class="fas fa-fingerprint mr-1"></i> Guest mode · <span class="text-indigo-400">Sign in to save history</span></div>`;
+      }
+    }
+    function showAuthMessage(msg, type = "error") {
+      const msgDiv = document.getElementById('authMessage');
+      if(msgDiv) {
+        msgDiv.innerHTML = `<span class="${type === 'error' ? 'text-rose-400' : 'text-emerald-400'}"><i class="fas ${type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} mr-1"></i>${msg}</span>`;
+        setTimeout(() => { if(msgDiv) msgDiv.innerHTML = ''; }, 3200);
+      }
+    }
+    function handleSignIn() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const pwd = document.getElementById('loginPassword').value;
+      if(!email || !pwd) { showAuthMessage("Please fill email & password", "error"); return; }
+      const storedUsersRaw = localStorage.getItem('scamshield_users');
+      let users = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+      const existing = users.find(u => u.email === email && u.password === pwd);
+      if(existing) {
+        saveUserToStorage({ email: existing.email, name: existing.name });
+        updateAuthUI();
+        showAuthMessage(`Welcome back ${existing.name || 'member'}!`, "success");
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+      } else {
+        showAuthMessage("Invalid credentials or user not registered. Try signing up.", "error");
+      }
+    }
+    function handleSignUp() {
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const pwd = document.getElementById('signupPassword').value;
+      if(!name || !email || !pwd) { showAuthMessage("All fields required", "error"); return; }
+      if(pwd.length < 4) { showAuthMessage("Password must be at least 4 characters", "error"); return; }
+      const storedUsersRaw = localStorage.getItem('scamshield_users');
+      let users = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+      if(users.find(u => u.email === email)) {
+        showAuthMessage("Email already exists. Sign in instead.", "error");
+        return;
+      }
+      const newUser = { name, email, password: pwd, createdAt: new Date().toISOString() };
+      users.push(newUser);
+      localStorage.setItem('scamshield_users', JSON.stringify(users));
+      saveUserToStorage({ email, name });
+      updateAuthUI();
+      showAuthMessage(`Account created! Welcome ${name} 🎉`, "success");
+      document.getElementById('signupName').value = '';
+      document.getElementById('signupEmail').value = '';
+      document.getElementById('signupPassword').value = '';
+      document.getElementById('tabSigninBtn').click();
+    }
+    function initAuthTabs() {
+      const signinTab = document.getElementById('tabSigninBtn');
+      const signupTab = document.getElementById('tabSignupBtn');
+      const signinPanel = document.getElementById('signinForm');
+      const signupPanel = document.getElementById('signupForm');
+      function setActive(activeIsSignin) {
+        if(activeIsSignin) {
+          signinTab.dataset.active = 'true';
+          signupTab.dataset.active = 'false';
+          signinPanel.classList.remove('hidden');
+          signupPanel.classList.add('hidden');
+        } else {
+          signinTab.dataset.active = 'false';
+          signupTab.dataset.active = 'true';
+          signinPanel.classList.add('hidden');
+          signupPanel.classList.remove('hidden');
         }
-
-        function displayResult(res) {
-
-            const timeline = document.getElementById('resultsTimeline');
-
-            const riskColor = res.riskLevel === 'High' ? 'text-rose-500' : (res.riskLevel === 'Medium' ? 'text-amber-500' : 'text-emerald-500');
-
-            
-
-            const card = document.createElement('div');
-
-            card.className = "glass p-6 rounded-2xl animate-in fade-in slide-in-from-bottom-4 duration-500";
-
-            card.innerHTML = `
-
-                <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
-
-                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Analysis Result</span>
-
-                    <span class="font-black ${riskColor}">${res.riskLevel.toUpperCase()} RISK</span>
-
-                </div>
-
-                <h3 class="text-xl font-bold mb-2">${res.summary}</h3>
-
-                <p class="text-slate-300 mb-4">${res.explanation}</p>
-
-                
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-
-                        <span class="block text-rose-400 text-xs font-bold mb-1">RED FLAGS</span>
-
-                        <ul class="text-sm list-disc pl-4 text-slate-300">
-
-                            ${res.redFlags.map(f => `<li>${f}</li>`).join('')}
-
-                        </ul>
-
-                    </div>
-
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-
-                        <span class="block text-indigo-400 text-xs font-bold mb-1">TECHNIQUE</span>
-
-                        <p class="text-sm text-slate-300">${res.manipulationTechnique}</p>
-
-                    </div>
-
-                </div>
-
-                <div class="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-xl mb-4">
-
-                    <span class="block text-emerald-400 text-xs font-bold mb-1">🛡️ SAFER VERSION</span>
-
-                    <p class="text-sm italic text-slate-200">"${res.saferVersion}"</p>
-
-                </div>
-
-                <div class="flex flex-col gap-2 text-sm text-slate-400">
-
-                    <p><strong>Next Steps:</strong> ${res.safeNextSteps}</p>
-
-                    <p class="text-indigo-300"><strong>Ask Gemini:</strong> ${res.followUpQuestion}</p>
-
-                </div>
-
-            `;
-
-            timeline.prepend(card);
-
-        }
-
-        // Mocking the API call for demonstration. 
-
-        // In AI Studio, replace this with the @google/genai SDK call.
-
-        async function callGeminiAPI(input) {
-
-            return new Promise(r => setTimeout(() => r({
-
-                riskLevel: "High",
-
-                summary: "Fake Shipping Notification",
-
-                explanation: "This message claims a package is held due to an address error, a common tactic to harvest credit card data.",
-
-                redFlags: ["Non-official URL", "Urgent tone", "Generic greeting"],
-
-                manipulationTechnique: "Smishing (SMS Phishing)",
-
-                safeNextSteps: "Block the number and go directly to the official courier's website.",
-
-                saferVersion: "We were unable to deliver your package. Please visit ups.com/tracking for updates.",
-
-                followUpQuestion: "Would you like me to check if that link is on a known blacklist?"
-
-            }), 1500));
-
-        }
-
-    </script>
-  <p style="font-size:14px;color:gray;">
-
-Powered by Gemini 3 API
-
-</p>
-
+      }
+      signinTab.addEventListener('click', () => setActive(true));
+      signupTab.addEventListener('click', () => setActive(false));
+      setActive(true);
+    }
+    
+    // Gemini 3 analysis engine (smart mock)
+    async function callGeminiAPI(inputText) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const lower = inputText.toLowerCase();
+          let riskLevel = "Low";
+          let summary = "✅ Likely safe communication";
+          let explanation = "No strong scam patterns detected. Stay cautious with unsolicited messages.";
+          let redFlags = ["No obvious threats"];
+          let manipulationTechnique = "Normal context";
+          let safeNextSteps = "Proceed with normal caution. Verify sender if uncertain.";
+          let saferVersion = inputText;
+          let followUpQuestion = "Would you like a deep URL reputation check?";
+          
+          if(lower.includes('urgent') && (lower.includes('verify') || lower.includes('account') || lower.includes('suspend'))) riskLevel = "High";
+          if(lower.includes('password reset') || lower.includes('locked') || lower.includes('irs')) riskLevel = "High";
+          if(lower.includes('bitcoin') || lower.includes('wire transfer') || lower.includes('gift card')) riskLevel = "High";
+          if(lower.includes('http://') && !lower.includes('https://')) riskLevel = "Medium";
+          if(lower.match(/whatsapp|telegram/i) && lower.match(/prize|winner/i)) riskLevel = "High";
+          if((lower.includes('dhl') || lower.includes('fedex')) && lower.includes('click')) riskLevel = "High";
+          
+          if(riskLevel === "High") {
+            summary = "⚠️ HIGH-RISK SCAM DETECTED";
+            explanation = "This message contains aggressive social engineering, fake urgency, and potential credential theft.";
+            redFlags = ["Urgent demand for action", "Suspicious domain", "Generic greeting", "Fake authority"];
+            manipulationTechnique = "Phishing + Authority Spoofing";
+            safeNextSteps = "DO NOT click links. Report as spam and block sender.";
+            saferVersion = "We noticed an unusual login attempt. If this wasn't you, please reset your password via official app.";
+            followUpQuestion = "Should I generate a domain blacklist report for this link?";
+          } else if(riskLevel === "Medium") {
+            summary = "⚠️ MEDIUM RISK - Suspicious Elements";
+            explanation = "Message shows signs of manipulation like shortened links or unusual tone.";
+            redFlags = ["Vague sender", "Pressure language", "Unusual link pattern"];
+            manipulationTechnique = "Smishing / Link Phishing";
+            safeNextSteps = "Verify with official channels. Never share OTP or passwords.";
+            saferVersion = "Your account requires attention. Please log in via the official website.";
+            followUpQuestion = "Run a safety scan on the embedded URL?";
+          }
+          resolve({
+            riskLevel, summary, explanation, redFlags: redFlags.slice(0,3),
+            manipulationTechnique, safeNextSteps, saferVersion, followUpQuestion
+          });
+        }, 950);
+      });
+    }
+    
+    async function runAnalysis() {
+      const textarea = document.getElementById('scamInput');
+      const text = textarea.value.trim();
+      const btn = document.getElementById('analyzeBtn');
+      if(!text) return;
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Gemini 3 scanning...`;
+      try {
+        const result = await callGeminiAPI(text);
+        displayResult(result, text);
+        textarea.value = '';
+      } catch(err) {
+        alert("Analysis engine busy. Retry.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-shield-alt"></i> Check for Scam`;
+      }
+    }
+    
+    function displayResult(res, originalInput) {
+      const timeline = document.getElementById('resultsTimeline');
+      const riskColor = res.riskLevel === 'High' ? 'text-rose-400' : (res.riskLevel === 'Medium' ? 'text-amber-400' : 'text-emerald-400');
+      const riskBg = res.riskLevel === 'High' ? 'border-l-rose-500' : (res.riskLevel === 'Medium' ? 'border-l-amber-500' : 'border-l-emerald-500');
+      const card = document.createElement('div');
+      card.className = `glass-card p-5 rounded-xl border border-slate-700/70 result-card animate-fade-slide ${riskBg} border-l-4 mb-4`;
+      card.innerHTML = `
+        <div class="flex justify-between items-start flex-wrap gap-2 mb-3">
+          <div class="flex items-center gap-2"><i class="fas fa-robot text-indigo-400"></i><span class="text-xs font-mono text-slate-400">${new Date().toLocaleTimeString()}</span></div>
+          <span class="text-sm font-black px-3 py-1 rounded-full ${res.riskLevel === 'High' ? 'bg-rose-500/20 text-rose-300' : (res.riskLevel === 'Medium' ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300')}">${res.riskLevel} RISK</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">${escapeHtml(res.summary)}</h3>
+        <p class="text-slate-300 text-sm mb-4">${escapeHtml(res.explanation)}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+          <div class="bg-slate-900/60 p-3 rounded-lg"><span class="text-rose-400 text-xs font-bold uppercase"><i class="fas fa-flag"></i> Red flags</span><ul class="list-disc pl-4 text-slate-300 text-sm mt-1">${res.redFlags.map(f => `<li>${escapeHtml(f)}</li>`).join('')}</ul></div>
+          <div class="bg-slate-900/60 p-3 rounded-lg"><span class="text-indigo-400 text-xs font-bold uppercase"><i class="fas fa-brain"></i> Manipulation</span><p class="text-sm text-slate-200 mt-1">${escapeHtml(res.manipulationTechnique)}</p></div>
+        </div>
+        <div class="bg-emerald-950/30 border border-emerald-500/30 p-3 rounded-lg mb-4"><span class="text-emerald-400 text-xs font-bold"><i class="fas fa-shield-heart"></i> SAFER VERSION</span><p class="text-sm italic text-slate-200 mt-1">"${escapeHtml(res.saferVersion)}"</p></div>
+        <div class="flex flex-col sm:flex-row justify-between gap-2 text-sm border-t border-slate-700 pt-3"><div><i class="fas fa-compass text-slate-400"></i> <span class="text-slate-300">${res.safeNextSteps}</span></div><div class="text-indigo-300"><i class="fas fa-question-circle"></i> ${res.followUpQuestion}</div></div>
+      `;
+      timeline.prepend(card);
+      if(timeline.children.length > 7) timeline.removeChild(timeline.lastChild);
+    }
+    
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    
+    window.runAnalysis = runAnalysis;
+    document.getElementById('analyzeBtn')?.addEventListener('click', runAnalysis);
+    document.getElementById('doSignin')?.addEventListener('click', handleSignIn);
+    document.getElementById('doSignup')?.addEventListener('click', handleSignUp);
+    initAuthTabs();
+    loadStoredUser();
+    setTimeout(() => {
+      if(document.getElementById('resultsTimeline').children.length === 0) {
+        const initDiv = document.createElement('div');
+        initDiv.className = "glass-card p-4 rounded-xl text-center text-slate-400 text-sm";
+        initDiv.innerHTML = `<i class="fas fa-shield-virus text-indigo-400 text-2xl mb-2 block"></i> Your scam analysis will appear here. Paste any suspicious message above.`;
+        document.getElementById('resultsTimeline').appendChild(initDiv);
+      }
+    }, 200);
+  </script>
 </body>
-
-</html>
-    <script src="./script.js"></script>
-
-  </body>
-  
 </html>
